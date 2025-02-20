@@ -5,17 +5,18 @@ metadata:
 spec:
   goTemplate: true
   goTemplateOptions: [ "missingkey=error" ]
+  generators:
   template:
     metadata:
-      name: kargo-demo
+      name: kargo-microservice
       annotations:
-        kargo.akuity.io/authorized-stage: kargo-demo
+        kargo.akuity.io/authorized-stage: kargo-microservice
     spec:
       project: default
       source:
         repoURL: https://github.com/juhisxd/kargo-microservices
         targetRevision: main
-        path: env/prod
+        path: .
       destination:
         server: http://cluster-juho-dev:8001
         namespace: kargo-microservice
