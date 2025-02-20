@@ -1,9 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: kargo-demo
-  namespace: argocd
+  name: addons-kargo-demo
 spec:
+  goTemplate: true
+  goTemplateOptions: [ "missingkey=error" ]
   generators:
   - list:
       elements:
@@ -18,7 +19,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: ${GITOPS_REPO_URL}
+        repoURL: https://github.com/juhisxd/kargo-demo
         targetRevision: stage/{{stage}}
         path: .
       destination:
