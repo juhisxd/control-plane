@@ -4,7 +4,8 @@ metadata:
   name: addons-kargo-demo
 spec:
   goTemplate: true
-  goTemplateOptions: [ "missingkey=error" ]
+  goTemplateOptions:
+    missingkey: error
   generators:
   - list:
       elements:
