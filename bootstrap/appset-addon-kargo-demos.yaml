@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: addons-kargo-demo
+#  name: addons-kargo-demo
 spec:
   goTemplate: true
   goTemplateOptions: [ "missingkey=error" ]
@@ -10,18 +10,18 @@ spec:
       elements:
       - stage: dev
       - stage: prod
-  template:
-    metadata:
-      name: kargo-demo-{{ .stage }}
-      annotations:
-        kargo.akuity.io/authorized-stage: kargo-demo:{{ .stage }}
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/juhisxd/kargo-microservices.git
-        targetRevision: stage/{{ .stage }}
-        path: env/{{ .stage }}
-      destination:
+ # template:
+ #   metadata:
+ #     name: kargo-demo-{{ .stage }}
+ #     annotations:
+ #       kargo.akuity.io/authorized-stage: kargo-demo:{{ .stage }}
+ #   spec:
+ #     project: default
+ #     source:
+ #       repoURL: https://github.com/juhisxd/kargo-microservices.git
+ #       targetRevision: stage/{{ .stage }}
+ #       path: env/{{ .stage }}
+ #     destination:
         server: http://cluster-juho-dev:8001
         namespace: kargo-demo-{{ .stage }}
       syncPolicy:
