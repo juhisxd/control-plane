@@ -20,7 +20,7 @@ spec:
       source:
         repoURL: https://github.com/juhisxd/kargo-microservices.git
         targetRevision: stage/{{ .stage }}
-        path: .
+        path: env/{{ .stage }}
       destination:
         server: http://cluster-juho-dev:8001
         namespace: kargo-demo-{{ .stage }}
