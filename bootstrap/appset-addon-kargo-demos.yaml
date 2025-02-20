@@ -19,7 +19,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/juhisxd/kargo-demo
+        repoURL: https://github.com/juhisxd/kargo-microservices.git
         targetRevision: stage/{{ .stage }}
         path: .
       destination:
