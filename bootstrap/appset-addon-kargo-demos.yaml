@@ -8,7 +8,9 @@ spec:
   generators:
   - list:
       elements:
-      - stage: main
+      - stage: test
+      - stage: uat
+      - stage: prod
   template:
     metadata:
       name: kargo-demo-{{ .stage }}
@@ -17,9 +19,9 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/juhisxd/kargo-microservices
-        targetRevision: {{ .stage }}
-        path: ./env/prod
+        repoURL: https://github.com/juhisxd/kargo-demo
+        targetRevision: stage/{{ .stage }}
+        path: .
       destination:
         server: http://cluster-juho-dev:8001
         namespace: kargo-demo-{{ .stage }}
