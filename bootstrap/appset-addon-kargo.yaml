@@ -15,16 +15,16 @@ spec:
     metadata:
       name: kargo-demo-{{stage}}
       annotations:
-        kargo.akuity.io/authorized-stage: kargo-demo:{{stages}}
+        kargo.akuity.io/authorized-stage: kargo-demo:{{stage}}
     spec:
       project: default
       source:
         repoURL: https://github.com/juhisxd/kargo-demo
-        targetRevision: stage/{{stages}}
+        targetRevision: stage/{{stage}}
         path: .
       destination:
         server: http://cluster-juho-dev:8001
-        namespace: kargo-demo-{{stages}}
+        namespace: kargo-demo-{{stage}}
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
