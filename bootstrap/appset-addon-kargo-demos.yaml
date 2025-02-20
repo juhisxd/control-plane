@@ -4,12 +4,12 @@ metadata:
   name: addons-kargo-demo
 spec:
   goTemplate: true
-  goTemplateOptions:
-    missingkey: error
+  goTemplateOptions: [ "missingkey=error" ]
   generators:
   - list:
       elements:
       - stage: main
+      - stage: uat
   template:
     metadata:
       name: kargo-demo-{{ .stage }}
