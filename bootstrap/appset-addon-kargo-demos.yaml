@@ -8,8 +8,7 @@ spec:
   generators:
   - list:
       elements:
-      - stage: test
-      - stage: uat
+      - stage: dev
       - stage: prod
   template:
     metadata:
@@ -20,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/juhisxd/kargo-microservices.git
-        targetRevision: stage/{{ .stage }}
+        targetRevision: {{ .stage }}
         path: .
       destination:
         server: http://cluster-juho-dev:8001
