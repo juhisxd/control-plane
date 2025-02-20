@@ -15,7 +15,7 @@ spec:
       source:
         repoURL: https://github.com/juhisxd/kargo-microservices
         targetRevision: main
-        path: .
+        path: env/prod
       destination:
         server: http://cluster-juho-dev:8001
         namespace: kargo-microservice
