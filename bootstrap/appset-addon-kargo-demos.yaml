@@ -3,9 +3,9 @@ kind: ApplicationSet
 metadata:
   name: addons-kargo-demo
 spec:
-  goTemplate: true
+  #goTemplate: true
   goTemplateOptions: [ "missingkey=error" ]
-  generators:
+  #generators:
   template:
     metadata:
       name: kargo-microservice
