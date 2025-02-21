@@ -12,9 +12,9 @@ spec:
       - stage: prod
   template:
     metadata:
-      name: kargo-simple-{{ .stage }}
+      name: guestbook-{{ .stage }}
       annotations:
-        kargo.akuity.io/authorized-stage: kargo-simple:{{ .stage }}
+        kargo.akuity.io/authorized-stage: guestbook:{{ .stage }}
     spec:
       project: default
       source:
@@ -23,7 +23,7 @@ spec:
         path: env/{{ .stage }}
       destination:
         server: http://cluster-juho-dev:8001
-        namespace: kargo-simple-{{ .stage }}
+        namespace: guestbook-{{ .stage }}
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
