@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/juhisxd/kargo-simple
-        targetRevision: stage/{{ .stage }}
+        targetRevision: main
         path: env/{{ .stage }}
       destination:
         server: http://cluster-juho-dev:8001
