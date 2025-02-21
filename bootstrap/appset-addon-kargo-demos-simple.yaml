@@ -25,5 +25,8 @@ spec:
         server: http://cluster-juho-dev:8001
         namespace: guestbook-{{ .stage }}
       syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
         syncOptions:
         - CreateNamespace=true
