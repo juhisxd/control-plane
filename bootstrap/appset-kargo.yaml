@@ -2,8 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: guestbook-advanced
-  namespace: guestbook-advanced
 spec:
+  goTemplate: true
+  goTemplateOptions: [ "missingkey=error" ]
   generators:
   - git:
       repoURL: https://github.com/juhisxd/kargo-advanced.git
@@ -19,9 +20,6 @@ spec:
       destination:
         namespace: guestbook-{{path.basename}}
         server: http://cluster-juho-dev:8001
-        # Specify either a cluster destination name or server address:
-        # name: REPLACEME
-        # server: https://REPLACEME
       project: guestbook
       source:
         path: ./
