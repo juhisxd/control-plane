@@ -18,6 +18,7 @@ spec:
     spec:
       destination:
         namespace: guestbook-{{path.basename}}
+        server: http://cluster-juho-dev:8001
         # Specify either a cluster destination name or server address:
         # name: REPLACEME
         # server: https://REPLACEME
