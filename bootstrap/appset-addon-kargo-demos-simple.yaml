@@ -14,7 +14,7 @@ spec:
     metadata:
       name: guestbook-{{ .stage }}
       annotations:
-        kargo.akuity.io/authorized-stage: guestbook:{{ .stage }}
+        kargo.akuity.io/authorized-stage: guestbook-{{ .stage }}
     spec:
       project: default
       source:
