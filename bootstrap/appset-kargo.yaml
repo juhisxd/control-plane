@@ -20,7 +20,7 @@ spec:
       destination:
         namespace: guestbook-{{path.basename}}
         server: http://cluster-juho-dev:8001
-      project: default
+      project: guestbook
       source:
         path: ./
         repoURL: https://github.com/juhisxd/kargo-advanced.git
