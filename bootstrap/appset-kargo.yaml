@@ -8,7 +8,7 @@ spec:
   generators:
   - git:
       repoURL: https://github.com/juhisxd/kargo-advanced.git
-      revision: HEAD
+      revision: main
       directories:
       - path: env/*
   template:
