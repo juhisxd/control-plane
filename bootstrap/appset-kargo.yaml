@@ -22,7 +22,7 @@ spec:
         server: http://cluster-juho-dev:8001
       project: guestbook
       source:
-        path: ./
+        path: 'env/{{ .path.basename }}'
         repoURL: https://github.com/juhisxd/kargo-advanced.git
         targetRevision: main
       syncPolicy:
