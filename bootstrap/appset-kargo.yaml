@@ -16,6 +16,7 @@ spec:
       name: 'guestbook-{{ .path.basename }}'
       annotations:
         kargo.akuity.io/authorized-stage: 'kargo-advanced:{{ .path.basename }}'
+        kubernetes.io/metadata.name: 'guestbook'
     spec:
       destination:
         namespace: 'guestbook-{{ .path.basename }}'
