@@ -10,7 +10,7 @@ spec:
       repoURL: https://github.com/juhisxd/kargo-advanced.git
       revision: 'env/{{ .path.basename }}'
       directories:
-      - path: /
+      - path: env/*
   template:
     metadata:
       name: 'guestbook-{{ .path.basename }}'
@@ -23,7 +23,7 @@ spec:
         server: http://cluster-juho-dev:8001
       project: guestbook
       source:
-        path: '/'
+        path: ./
         repoURL: https://github.com/juhisxd/kargo-advanced.git
         targetRevision: 'env/{{ .path.basename }}'
       syncPolicy:
