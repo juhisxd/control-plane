@@ -8,7 +8,7 @@ spec:
   generators:
   - git:
       repoURL: https://github.com/juhisxd/kargo-advanced.git
-      revision: main
+      revision: 'env/{{ .path.basename }}'
       directories:
       - path: env/*
   template:
@@ -25,7 +25,7 @@ spec:
       source:
         path: 'env/{{ .path.basename }}'
         repoURL: https://github.com/juhisxd/kargo-advanced.git
-        targetRevision: main
+        targetRevision: 'env/{{ .path.basename }}'
       syncPolicy:
         automated:
           prune: true
