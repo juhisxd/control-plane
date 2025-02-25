@@ -11,18 +11,18 @@ spec:
       - path: env/*
   template:
     metadata:
-      name: guestbook-{{ .path.basename }}
+      name: guestbook-{{path.basename}}
       annotations:
-        kargo.akuity.io/authorized-stage: kargo-advanced:{{ .path.basename }}
+        kargo.akuity.io/authorized-stage: kargo-advanced:{{path.basename}}
     spec:
       destination:
-        namespace: guestbook-{{ .path.basename }}
+        namespace: guestbook-{{path.basename}}
         server: http://cluster-juho-dev:8001
       project: guestbook
       source:
         path: ./
         repoURL: https://github.com/juhisxd/kargo-advanced.git
-        targetRevision: env/{{ .path.basename }}
+        targetRevision: env/{{path.basename}}
       syncPolicy:
         automated:
           prune: true
