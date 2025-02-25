@@ -25,7 +25,7 @@ spec:
       source:
         path: ./
         repoURL: https://github.com/juhisxd/kargo-advanced.git
-        targetRevision: 'env/{{ .path.basename }}'
+        targetRevision: env/{{ .path.basename }}
       syncPolicy:
         automated:
           prune: true
