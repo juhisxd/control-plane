@@ -14,7 +14,7 @@ spec:
   template:
     metadata:
       name: 'guestbook-{{ .path.basename }}'
-      namespace: argocd
+#      namespace: argocd
       annotations:
         kargo.akuity.io/authorized-stage: 'kargo-advanced:{{ .path.basename }}'
     spec:
