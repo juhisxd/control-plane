@@ -1,0 +1,105 @@
+# ApplicationSet to deploy ALL the helm charts for each cluster
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: addons
+  namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.out-of-sync.slack: alerts-argocd-cloud-platform
+    notifications.argoproj.io/subscribe.app-health-degraded.slack: alerts-argocd-cloud-platform
+spec:
+  goTemplate: true
+  generators:
+  - matrix:
+      generators:
+        - clusters:
+            selector:
+              matchLabels:
+                argocd.argoproj.io/secret-type: cluster
+        - git:
+            repoURL: https://github.com/RELEX-Solutions/platform-helm-charts-dev.git
+            revision: juho-dev                           ## ARGO CONFIG
+            directories:
+            - path: helm-charts/*
+  template:
+    metadata:
+      name: '{{.path.basename}}-{{.name}}' # {{name}} comes from the name specified for cluster in secret
+    spec:
+      project: '{{.name}}'
+      sources:
+        - repoURL: https://github.com/RELEX-Solutions/platform-helm-charts-dev.git
+          targetRevision: juho-dev                       ## ARGO CONFIG
+          path: '{{.path.path}}'
+          helm:
+            valueFiles:
+              - values.yaml
+              - "../../argocd-control-planes/platform-juho-argo-cp/environments/{{.name}}/{{.path.basename}}/values.yaml" ## ARGO CONFIG- This ValueFile name HAS TO be changed according to the env/cluster # All value files in all chart folders should be called the same name
+            # values has priority over valueFiles
+            values: |-
+              {{- if eq .path.basename "external-dns" }}
+                external-dns:
+                  domainFilters:
+                    - {{.metadata.annotations.hostedzonename}}
+                  serviceAccount:
+                    annotations:
+                      azure.workload.identity/client-id: {{.metadata.annotations.externaldnswi}}
+                  azure:
+                    resourceGroup: {{.metadata.annotations.externaldnsrg}}
+                    subscriptionId: {{.metadata.annotations.externaldnssubscription}}
+                    userAssignedIdentityID: {{.metadata.annotations.externaldnswi}}
+              {{- end }}
+
+              {{- if eq .path.basename "cert-manager" }}
+                cert-manager:
+                  serviceAccount:
+                    annotations:
+                      azure.workload.identity/client-id: {{.metadata.annotations.certmanagerwi}}
+              {{- end }}
+
+              {{- if eq .path.basename "external-secrets" }}
+                external-secrets:
+                  serviceAccount:
+                    annotations:
+                      azure.workload.identity/client-id: {{.metadata.annotations.externalsecretswi}}
+              {{- end }}
+              {{- if eq .path.basename "prometheus-operator" }}
+                kube-prometheus-stack:
+                  prometheus:
+                    prometheusSpec:
+                      externalLabels: 
+                        team: {{.metadata.annotations.team}}
+                        cluster: {{.metadata.annotations.team}}-{{.name}}
+                prometheus-resources:
+                  ingress:
+                    annotations:
+                      whitelistSourceRange: {{ .metadata.annotations.authorizedIpRanges }}
+              {{- end }}
+      destination:
+        server: '{{.server}}'
+        namespace: '{{.path.basename}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      ## Bug in cert-manager webhook- solution based on https://github.com/cert-manager/cert-manager/issues/4114
+      ignoreDifferences:
+        - group: admissionregistration.k8s.io
+          kind: ValidatingWebhookConfiguration
+          name: cert-manager-{{.name}}-webhook
+          jqPathExpressions:
+            - .webhooks[].namespaceSelector.matchExpressions[] | select(.key == "control-plane")
+            - .webhooks[].namespaceSelector.matchExpressions[] | select(.key == "kubernetes.azure.com/managedby")
+  # Required to install kube prometheus stack CRDs
+  templatePatch: |
+    {{- if eq .path.basename "prometheus-operator" }}
+    metadata:
+      annotations:
+        argocd.argoproj.io/compare-options: ServerSideDiff=true
+    spec:
+      syncPolicy:
+        syncOptions: 
+          - CreateNamespace=true
+          - ServerSideApply=true
+    {{-  end }}
