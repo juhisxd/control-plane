@@ -1,8 +1,0 @@
-apiVersion: argocd.akuity.io/v1alpha1
-kind: ArgoCD
-metadata:
-  name: cluster-addons
-spec:
-  description: ""
-  instanceSpec: {}
-  version: v2.10.4
