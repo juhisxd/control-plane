@@ -23,23 +23,9 @@ spec:
         path: ./
         repoURL: https://github.com/juhisxd/kargo-advanced.git
         targetRevision: env/{{path.basename}}
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
-          - RetryBackoffDuration=10s
-          - RetryBackoffMaxDuration=3m
-          - RetryLimit=3
-      retry:
-        limit: 3
-        backoff:
-          duration: 10s
-          factor: 2
-          maxDuration: 1m
-      health:
-        retryStrategy:
-          limit: 3
-          backoffDuration: "10s"
-          maxBackoffDuration: "1m"
+      #syncPolicy:
+      #  automated:
+      #    prune: true
+      #    selfHeal: true
+      #  syncOptions:
+      #    - CreateNamespace=true
